@@ -20,3 +20,8 @@ Automation for Role Definition and Role Assignment Template in azure portal can 
 Terraform![Uploading image.png…]()
 
 # Aws-Deployment
+
+**CloudFormation Stack Deployment:** The user clicks your deep link to create the stack.
+**EventBridge Monitoring:** An EventBridge rule listens for stack events on the default event bus.
+**Trigger: **When the stack status changes to CREATE_COMPLETE, EventBridge triggers the Lambda function.
+**Lambda Execution:** The Lambda function uses the AWS SDK (Boto3/Node.js) to describe the stack, extract the RoleARN from the Outputs, and proceed with your authentication logic.
