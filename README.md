@@ -19,3 +19,4 @@ Automation for Role Definition and Role Assignment Template in azure portal can 
 		b. Azure blob storage -- Public to store the bicep
 Terraform![Uploading image.png…]()
 
+# Aws-Deployment
