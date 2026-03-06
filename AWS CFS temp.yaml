@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Automated creation of IAM Managed Policy and Role'
+
+Resources:
+  # 1. Create a Customer Managed Policy
+  AutomationManagedPolicy:
+    Type: 'AWS::IAM::ManagedPolicy'
+    Properties:
+      Description: 'Policy granting specific automation permissions'
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'ec2:Describe*'
+              - 's3:ListBucket'
+            Resource: '*'
+
+  # 2. Create the IAM Role and assign the policy
+  AutomationRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: 'MyAutomationRole'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: 'ec2.amazonaws.com' # Change service as needed
+            Action: 'sts:AssumeRole'
+      # 3. Assign the policy created above to this role
+      ManagedPolicyArns:
+        - !Ref AutomationManagedPolicy
+
+Outputs:
+  # 4. Share the RoleARN for further use
+  RoleARN:
+    Description: 'The ARN of the newly created automation role'
+    Value: !GetAtt AutomationRole.Arn
+    Export:
+      Name: 'MyAutomationRoleARN'
